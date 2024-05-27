@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using WebApiCatalogo.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,7 +15,14 @@ builder.Services.AddSwaggerGen();
  * string mySqlConnection = builder.Configuration.GetConnectionString("nome da variavel que voce colocou no appsettings.json")
  */
 
+//string de conexão
 string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// faz parte tambem !!!!
+
+builder.Services.AddDbContext<WebApiCatalogoContext>(options => options.UseMySql(mySqlConnection,
+    ServerVersion.AutoDetect(mySqlConnection)));
+
 
 
 var app = builder.Build();
