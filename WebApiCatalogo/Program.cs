@@ -7,6 +7,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+/*Pra voce fazer a conexão com o banco tambem precisa lançar o codigo para fazer conexão com o banco 
+ * Exemplo: 
+ * string mySqlConnection = builder.Configuration.GetConnectionString("nome da variavel que voce colocou no appsettings.json")
+ */
+
+string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
