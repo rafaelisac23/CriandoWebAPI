@@ -1,7 +1,15 @@
-﻿namespace WebApiCatalogo.Models;
+﻿using System.Collections.ObjectModel;
+
+namespace WebApiCatalogo.Models;
 
 public class Category
+ 
 {
+
+    public Category()
+    {
+        Produtcts = new Collection<Product>();
+    }
     /* quando não tiver os ? em frente ao tipo das variaveis o compilador vai dar um alerta com um verdinho embaixo
      * pois as propriedades por padrão tem que ser nullable
      * 
@@ -13,5 +21,9 @@ public class Category
     public int CategoryId { get; set; }
     public string? Name { get; set; }
     public string? ImageUrl { get; set; }
+
+    // definindo entidade de navegação - chave estrangeira no banco de dados
+
+    public ICollection<Product>? Produtcts { get; set; }
 
 }

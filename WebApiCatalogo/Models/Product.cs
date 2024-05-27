@@ -14,4 +14,9 @@ public class Product
     public decimal Price { get; set; }
     public  string? ImageUrl { get; set; }
     public float stock { get; set; }
+
+    //definindo chave estrangeira em produto - pode se usar esse ou o outro da category
+
+    public int CategoryId { get; set; }
+    public Category? Category { get; set; }
 }
