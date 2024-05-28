@@ -1,7 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations; //tem que ser adcionado quando se faz um data anotation
+using System.ComponentModel.DataAnnotations.Schema;//tem que ser adcionado quando se faz um data anotation
 
 namespace WebApiCatalogo.Models;
 
+
+// aqui adcionamos o data anotation que é nada mais nada menos do jeito que voce quer que fique o nome e o formato no banco de dados
+
+[Table("Categories")]
 public class Category
  
 {
@@ -17,9 +23,16 @@ public class Category
      * do banco de dados !!! fica a dica !!!
      */
 
-
+    [Key]
     public int CategoryId { get; set; }
+
+
+    [Required]// DataAnnotations
+    [StringLength(80)]// DataAnnotations
     public string? Name { get; set; }
+
+    [Required]// DataAnnotations
+    [StringLength(300)] // DataAnnotations
     public string? ImageUrl { get; set; }
 
     // definindo entidade de navegação - chave estrangeira no banco de dados
