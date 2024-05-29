@@ -43,6 +43,21 @@ namespace WebApiCatalogo.Controllers
             return products;
         }
 
+        [HttpGet("{id:int}")]
+        /*se voce colocar : o valor digitados vai ter que ser obrigatorioamente do informado depois do :*/
+        public ActionResult<Product> Get(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p=>p.ProductId == id);
+
+            if (product is null)
+            {
+                return NotFound("Valor Não Encontrado");
+            }
+
+            return product;
+            
+        }
+
         
     }
 }
