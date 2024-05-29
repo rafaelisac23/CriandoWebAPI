@@ -43,7 +43,7 @@ namespace WebApiCatalogo.Controllers
             return products;
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name = "ObterProduto")]
         /*se voce colocar : o valor digitados vai ter que ser obrigatorioamente do informado depois do :*/
         public ActionResult<Product> Get(int id)
         {
@@ -56,6 +56,25 @@ namespace WebApiCatalogo.Controllers
 
             return product;
             
+        }
+
+        [HttpPost]
+        public ActionResult Post(Product produto)
+        {
+
+            if (produto is null)
+                return BadRequest();
+
+
+             _context.Products.Add(produto);
+            _context.SaveChanges();
+
+            return new CreatedAtRouteResult("ObterProduto",
+                new { id = produto.ProductId }, produto);
+
+            /*para poder acessar esse produto voce vai ter que por no metodo
+             get pelo id a seguinte rota ", Name ="ObterProduto" "*/
+
         }
 
         
