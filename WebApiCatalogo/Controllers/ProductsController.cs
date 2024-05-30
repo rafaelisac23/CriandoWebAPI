@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApiCatalogo.Context;
 using WebApiCatalogo.Models;
 
@@ -47,7 +48,7 @@ namespace WebApiCatalogo.Controllers
         /*se voce colocar : o valor digitados vai ter que ser obrigatorioamente do informado depois do :*/
         public ActionResult<Product> Get(int id)
         {
-            var product = _context.Products.FirstOrDefault(p=>p.ProductId == id);
+            var product = _context.Products.FirstOrDefault(p => p.ProductId == id);
 
             if (product is null)
             {
@@ -55,7 +56,7 @@ namespace WebApiCatalogo.Controllers
             }
 
             return product;
-            
+
         }
 
         [HttpPost]
@@ -66,7 +67,7 @@ namespace WebApiCatalogo.Controllers
                 return BadRequest();
 
 
-             _context.Products.Add(produto);
+            _context.Products.Add(produto);
             _context.SaveChanges();
 
             return new CreatedAtRouteResult("ObterProduto",
@@ -75,6 +76,20 @@ namespace WebApiCatalogo.Controllers
             /*para poder acessar esse produto voce vai ter que por no metodo
              get pelo id a seguinte rota ", Name ="ObterProduto" "*/
 
+        }
+
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id,Product prod)
+        {
+            if (id != prod.ProductId)
+            {
+                return BadRequest();
+            }
+            _context.Entry(prod).State=EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok(prod);
+            
         }
 
         
