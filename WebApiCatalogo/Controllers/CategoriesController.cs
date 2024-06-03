@@ -28,33 +28,43 @@ namespace WebApiCatalogo.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Category>> Get()
         {
-            var categoria = _context.Categories.ToList(); /*aqui ele ta colocando a tabela do banco de dados Products como valor da variavel*/
-            if (categoria is null)
+            try
             {
-                return NotFound("Categorias Não Encontradas");
-                /*aqui pode ser caso não ache o valor
-                 * se voce so deixar return NotFound(); ele vai dar erro pois nao vai conseguir transformar 
-                 * o valor de products em NotFound() ai voce adciona ActionResult<> no tipo da function
-                 * para dizer que o valor que vai retornar é um Ienumerable do tipo Product
-                 */
+                
+                 return _context.Categories.AsNoTracking().ToList();
             }
-
-            return categoria;
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um problema ao tratar sua solicitação ");
+                //quando não há conexão com banco
+                
+            }
+              
+            
+           
         }
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         /*se voce colocar : o valor digitados vai ter que ser obrigatorioamente do informado depois do :*/
         public ActionResult<Category> Get(int id)
         {
-            var categoria = _context.Categories.FirstOrDefault(p => p.CategoryId == id);
-
-            if (categoria is null)
+            try
             {
-                return NotFound("Valor Não Encontrado");
+                var categoria = _context.Categories.FirstOrDefault(p => p.CategoryId == id);
+
+                if (categoria is null)
+                {
+                    return NotFound("Valor Não Encontrado");
+                }
+
+                return Ok(categoria);
+
             }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um problema ao tratar sua solicitação ");
 
-            return Ok(categoria);
-
+            }
         }
 
         [HttpPost]
