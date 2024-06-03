@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;//tem que ser adcionado quando se faz um data anotation
-using System.ComponentModel.DataAnnotations.Schema;//tem que ser adcionado quando se faz um data anotation
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;//tem que ser adcionado quando se faz um data anotation
 
 namespace WebApiCatalogo.Models;
 
@@ -39,5 +40,7 @@ public class Product
     //definindo chave estrangeira em produto - pode se usar esse ou o outro da category
 
     public int CategoryId { get; set; }
+
+    [JsonIgnore] //pra quando for usar o httpPut ele nao considerar mudar as informações da classe categoria alem do ID
     public Category? Category { get; set; }
 }

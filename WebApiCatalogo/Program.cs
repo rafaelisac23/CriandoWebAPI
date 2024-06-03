@@ -1,11 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using WebApiCatalogo.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+/* esse comando serve para ignorar quando se tem uma referencia ciclica ,no caso para fazer funcionar a parte de mostrar
+ * todos os produtos que estão cadastrados em cada categoria ("comando abaixo")
+ */
+builder.Services.AddControllers().AddJsonOptions(options =>
+options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
