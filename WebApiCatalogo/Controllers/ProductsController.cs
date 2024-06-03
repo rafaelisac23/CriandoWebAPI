@@ -92,6 +92,20 @@ namespace WebApiCatalogo.Controllers
             
         }
 
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            var prod = _context.Products.FirstOrDefault(p => p.ProductId == id);
+
+            if (prod is null)
+            {
+                return NotFound("Não encontrado");
+            }
+            _context.Products.Remove(prod);
+            _context.SaveChanges();
+
+            return Ok(prod);
+        }
         
     }
 }
